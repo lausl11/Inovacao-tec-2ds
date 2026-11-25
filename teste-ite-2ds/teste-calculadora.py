@@ -5,25 +5,73 @@ from calculadora import soma, subtrai, multiplica, divide
 class TestCalculadora(unittest.TestCase):
 
     def test_soma(self):
-        self.assertEqual(soma(1, 2), 3)
-        self.assertEqual(soma(-1, 1), 0)
-        self.assertEqual(soma(-1, -1), -2)
+        casos = [
+            (1, 2, 3),
+            (-1, 1, 0),
+            (-1, -1, -2),
+        ]
+        for a, b, esperado in casos:
+            with self.subTest(a=a, b=b):
+                resultado = soma(a, b)
+                self.assertEqual(
+                    resultado,
+                    esperado,
+                    msg=f"Falha: soma({a}, {b}) retornou {resultado}, esperado {esperado}"
+                )
+                print(f"[OK] Teste de soma passou: {a} + {b} = {resultado}")
 
     def test_subtrai(self):
-        self.assertEqual(subtrai(10, 5), 5)
-        self.assertEqual(subtrai(-1, -1), 0)
-        self.assertEqual(subtrai(0, 1), -1)
+        casos = [
+            (10, 5, 5),
+            (-1, -1, 0),
+            (0, 1, -1),
+        ]
+        for a, b, esperado in casos:
+            with self.subTest(a=a, b=b):
+                resultado = subtrai(a, b)
+                self.assertEqual(
+                    resultado,
+                    esperado,
+                    msg=f"Falha: subtrai({a}, {b}) retornou {resultado}, esperado {esperado}"
+                )
+                print(f"[OK] Teste de subtração passou: {a} - {b} = {resultado}")
 
     def test_multiplica(self):
-        self.assertEqual(multiplica(3, 7), 21)
-        self.assertEqual(multiplica(-1, 1), -1)
-        self.assertEqual(multiplica(0, 10), 0)
+        casos = [
+            (3, 7, 21),
+            (-1, 1, -1),
+            (0, 10, 0),
+        ]
+        for a, b, esperado in casos:
+            with self.subTest(a=a, b=b):
+                resultado = multiplica(a, b)
+                self.assertEqual(
+                    resultado,
+                    esperado,
+                    msg=f"Falha: multiplica({a}, {b}) retornou {resultado}, esperado {esperado}"
+                )
+                print(f"[OK] Teste de multiplicação passou: {a} * {b} = {resultado}")
 
     def test_divide(self):
-        self.assertEqual(divide(10, 2), 5)
-        self.assertEqual(divide(-10, 2), -5)
-        with self.assertRaises(ValueError):
-            divide(10, 0)
+        casos = [
+            (10, 2, 5),
+            (-10, 2, -5),
+        ]
+        for a, b, esperado in casos:
+            with self.subTest(a=a, b=b):
+                resultado = divide(a, b)
+                self.assertEqual(
+                    resultado,
+                    esperado,
+                    msg=f"Falha: divide({a}, {b}) retornou {resultado}, esperado {esperado}"
+                )
+                print(f"[OK] Teste de divisão passou: {a} / {b} = {resultado}")
+
+        # Teste de exceção para divisão por zero
+        with self.subTest(a=10, b=0):
+            with self.assertRaises(ValueError, msg="Falha: divide(10, 0) não levantou ValueError"):
+                divide(10, 0)
+            print("[OK] Teste de divisão por zero passou: ValueError levantado corretamente")
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
